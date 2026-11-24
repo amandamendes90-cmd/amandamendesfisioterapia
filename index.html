@@ -325,8 +325,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   .caixa{padding:28px 22px}
 }
 </style>
-<!-- Google tag (gtag.js) com Consent Mode: começa SEM permissão e só libera se o visitante aceitar os cookies -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-GX48H8T2QH"></script>
+<!-- Consent Mode: começa SEM permissão e só libera se o visitante aceitar os cookies -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -337,8 +336,13 @@ dialog .btn{margin-top:10px;padding:12px 24px}
     ad_personalization: 'denied',
     wait_for_update: 500
   });
+</script>
+<!-- Google tag (contêiner GTM-5S4XFFS6) -->
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5S4XFFS6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-GX48H8T2QH');
 </script>
 </head>
 <body class="travado">
@@ -787,7 +791,11 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   // Eventos de medição (só registram se o visitante aceitou os cookies)
   document.addEventListener("click", function(e){
     var a = e.target.closest && e.target.closest("a[href^='https://wa.me/']");
-    if (a && typeof gtag === "function") gtag("event", "clique_whatsapp", { local: a.className || "link" });
+    if (a) {
+      if (typeof gtag === "function") gtag("event", "clique_whatsapp", { local: a.className || "link" });
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: "whatsapp_click" });
+    }
   });
 
   // Formulário -> WhatsApp
@@ -802,6 +810,8 @@ dialog .btn{margin-top:10px;padding:12px 24px}
       (msg ? "O que sinto: " + msg + "\n" : "") +
       "Meu WhatsApp: " + tel;
     if (typeof gtag === "function") gtag("event", "generate_lead", { metodo: met });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: "formulario_enviado", metodo: met });
     window.open(zap(texto), "_blank", "noopener");
   });
 
