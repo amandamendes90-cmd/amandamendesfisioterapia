@@ -325,6 +325,21 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   .caixa{padding:28px 22px}
 }
 </style>
+<!-- Google tag (gtag.js) com Consent Mode: começa SEM permissão e só libera se o visitante aceitar os cookies -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GX48H8T2QH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+  gtag('js', new Date());
+  gtag('config', 'G-GX48H8T2QH');
+</script>
 </head>
 <body class="travado">
 
@@ -769,6 +784,12 @@ dialog .btn{margin-top:10px;padding:12px 24px}
     itens.forEach(function(el){ el.classList.add("vis"); });
   }
 
+  // Eventos de medição (só registram se o visitante aceitou os cookies)
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a[href^='https://wa.me/']");
+    if (a && typeof gtag === "function") gtag("event", "clique_whatsapp", { local: a.className || "link" });
+  });
+
   // Formulário -> WhatsApp
   document.getElementById("form-contato").addEventListener("submit", function(e){
     e.preventDefault();
@@ -780,6 +801,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
       "Gostaria de agendar uma avaliação: " + met + ".\n" +
       (msg ? "O que sinto: " + msg + "\n" : "") +
       "Meu WhatsApp: " + tel;
+    if (typeof gtag === "function") gtag("event", "generate_lead", { metodo: met });
     window.open(zap(texto), "_blank", "noopener");
   });
 
@@ -795,8 +817,10 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   function gravarEscolha(v){ try { localStorage.setItem("cookies-escolha", v); } catch(e){} }
   function aplicarEscolha(v){
     window.cookiesConsent = v; // "aceito" ou "recusado"
-    // Quando instalar a tag do Google (Ads/Analytics), carregue-a somente se v === "aceito".
-    // Se usar o Google Tag, também pode atualizar o consentimento aqui (gtag('consent','update',...)).
+    var st = (v === "aceito") ? "granted" : "denied";
+    if (typeof gtag === "function") {
+      gtag("consent", "update", { ad_storage: st, analytics_storage: st, ad_user_data: st, ad_personalization: st });
+    }
   }
   var escolha = lerEscolha();
   if (escolha) { aplicarEscolha(escolha); }
