@@ -9,6 +9,32 @@
 <meta property="og:description" content="Agende sua avaliação individual em Cascavel/PR.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#2C5B67">
+<script>
+/* ============================================================
+   CONFIGURAÇÃO DA PROMOÇÃO  (edite só este bloco)
+   ATENÇÃO: não inclua valores, tabelas de preços ou formas de pagamento neste site
+   (Código de Ética da Fisioterapia, Res. COFFITO 424/2013). Valores só em contato privado.
+   ============================================================ */
+(function(){
+  var P = window.PROMO = {
+    inicio: "2026-11-26T00:00:00-03:00",   // início da promoção
+    fim:    "2026-11-30T23:59:59-03:00",   // EXTENSÃO RELÂMPAGO: troque por "2026-12-05T23:59:59-03:00" (e atualize o regulamento em PDF)
+    exigirVideo: true,                      // true = rolagem só libera após o vídeo; false = libera direto
+    descontos: { single: 15, duo: 20, trio: 25, quarteto: 30 },
+    // Texto padrão que acompanha TODA mensagem de solicitação enviada pelo WhatsApp (fica registrado na conversa)
+    textoPadrao: "Olá, gostaria de saber mais sobre as turmas de Pilates matutinas e os planos de atendimento."
+  };
+  var agora = Date.now(), ini = Date.parse(P.inicio), fim = Date.parse(P.fim);
+  var previa = /[?&]previa=1/.test(location.search);   // ?previa=1 mostra a promoção a qualquer hora (para testes)
+  P.previa = previa;
+  var ativa = previa || (agora >= ini && agora <= fim);   // fora do período: site normal
+  document.documentElement.classList.add(ativa ? "promo-on" : "promo-off");
+  if (!previa) {   // troca sozinho no início e no fim, sem contagem visível
+    var alvo = agora < ini ? ini : (agora <= fim ? fim + 1000 : 0);
+    if (alvo) setTimeout(function(){ location.reload(); }, Math.min(alvo - agora, 2147000000) + 500);
+  }
+})();
+</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='18' y='6' width='28' height='52' rx='14' fill='%232C5B67'/%3E%3Cpath d='M24 30c4-6 12-6 16 0' stroke='%23fff' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,6 +175,7 @@ section{padding:84px 0;position:relative}
 .bloco p{color:var(--muted);margin-bottom:14px;font-size:17px}
 .bloco .quando{background:#fff;border-left:4px solid var(--terracota);border-radius:0 18px 18px 0;padding:16px 20px;margin:18px 0 22px;font-size:16px;color:var(--carvao)}
 .bloco .quando b{color:var(--terracota)}
+.nota-pil{font-size:13px!important;color:var(--muted);background:var(--creme-claro);border-radius:14px;padding:10px 14px;margin:0 0 16px!important}
 .quem-atende{font-size:15px;color:var(--petroleo)!important;margin-bottom:12px!important}
 .bens{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:18px 0 26px}
 .bens li{display:flex;gap:10px;font-size:15.5px}
@@ -276,6 +303,110 @@ dialog h2{color:var(--petroleo);font-size:22px;margin-bottom:12px}
 dialog p{margin-bottom:10px;color:var(--muted);font-size:15px}
 dialog .btn{margin-top:10px;padding:12px 24px}
 
+/* ========== PROMOÇÃO ========== */
+:root{--terra-claro:#E8836A}
+.promo-wrap{display:none}
+html.promo-on .promo-wrap{display:block}
+html.promo-on #porta{display:none!important}
+.nav-bf{display:none;color:var(--terracota);font-weight:700}
+html.promo-on .nav-bf{display:inline}
+html.video-trava,html.video-trava body{overflow:hidden;height:100%}
+html.video-trava .topo{display:none}
+html.video-trava #promo-topo{height:100vh;height:100svh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.promo-topo{--pt-ov:.80;position:relative;background:radial-gradient(circle at 12% 8%,rgba(181,85,60,.30),transparent 46%),radial-gradient(circle at 92% 88%,rgba(44,91,103,.40),transparent 52%),linear-gradient(rgba(22,18,19,var(--pt-ov)),rgba(22,18,19,calc(var(--pt-ov) + .08))),url("https://github.com/user-attachments/assets/c8a894b7-9163-42d1-9bce-1aa2fd3bb878") center/cover no-repeat,#161213;color:#fff;padding:24px 0 56px}
+.pt-in{max-width:900px;margin:0 auto;padding:0 20px;text-align:center}
+.pt-logo{height:60px;width:auto;margin:0 auto 14px;filter:brightness(0) invert(1)}
+.pt-badge{display:block;font-family:Poppins,sans-serif;font-weight:700;letter-spacing:.22em;font-size:13px;color:#F3B9A8;margin-bottom:10px}
+.pt-in h1{font-size:clamp(34px,7.4vw,66px);line-height:1.04;margin-bottom:14px;letter-spacing:-.02em;color:#fff}
+.pt-in h1 .big{color:var(--terra-claro)}
+.pt-sub{font-size:clamp(16px,2.4vw,19px);color:rgba(255,255,255,.86);max-width:60ch;margin:0 auto 16px}
+.pt-validade{display:inline-block;font-family:Poppins,sans-serif;font-size:clamp(15px,2.2vw,18px);background:var(--terracota);color:#fff;padding:10px 24px;border-radius:99px;margin-bottom:6px}
+.pt-validade b{font-weight:700}
+.pt-video{position:relative;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 24px 50px -18px rgba(0,0,0,.8);margin:22px auto 8px;max-width:680px;border:1px solid rgba(255,255,255,.14)}
+.pt-video video{display:block;width:100%;max-height:60vh;max-height:60svh;aspect-ratio:auto 16/9;background:#000;object-fit:contain}
+.pt-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(0,0,0,.45);color:#fff;font-family:Poppins,sans-serif;font-weight:600;font-size:15px;transition:background .3s}
+.pt-play:hover{background:rgba(0,0,0,.32)}
+.pt-play .tri{width:72px;height:72px;border-radius:50%;background:var(--terracota);display:grid;place-items:center;box-shadow:0 0 0 0 rgba(181,85,60,.6);animation:pulsaVid 2.2s infinite}
+.pt-play .tri svg{width:30px;height:30px;fill:#fff;margin-left:4px}
+@keyframes pulsaVid{70%{box-shadow:0 0 0 22px rgba(181,85,60,0)}100%{box-shadow:0 0 0 0 rgba(181,85,60,0)}}
+.pt-play[hidden]{display:none}
+.pt-bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.18)}
+.pt-bar span{display:block;height:100%;width:0;background:var(--terra-claro);transition:width .4s linear}
+.pt-falha{display:none;padding:34px 20px;color:rgba(255,255,255,.85);font-size:15px}
+.pt-video.falhou video,.pt-video.falhou .pt-play,.pt-video.falhou .pt-bar{display:none}
+.pt-video.falhou .pt-falha{display:block}
+.pt-dica{font-size:14.5px;color:rgba(255,255,255,.8);margin:10px 0 24px}
+.pt-dica.balanca{animation:balanca .5s}
+@keyframes balanca{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.pt-dica.ok{color:#9be3b3;font-weight:600}
+.pt-tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+.pt-tier{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:18px 10px 16px}
+.pt-tier .dots{display:flex;gap:4px;justify-content:center;margin-bottom:8px;min-height:14px}
+.pt-tier .dots i,.fmt .dots i{width:13px;height:13px;border-radius:50%;background:var(--terra-claro)}
+.pt-tier .pc{font-family:Poppins,sans-serif;font-weight:700;font-size:clamp(26px,5vw,38px);line-height:1;color:#fff}
+.pt-tier .pc small{font-size:.5em;margin-left:2px}
+.pt-tier h3{font-size:15px;margin:6px 0 2px;color:#F3B9A8}
+.pt-tier p{font-size:12.5px;color:rgba(255,255,255,.75);line-height:1.35}
+.pt-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn-claro{border:2px solid rgba(255,255,255,.55);color:#fff}
+.btn-claro:hover{background:#fff;color:var(--carvao)}
+.btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+.pt-mini{margin-top:18px;font-size:12.5px;color:rgba(255,255,255,.6)}
+
+.planos{background:var(--creme-claro);padding:84px 0}
+.planos.aberto .wrap{animation:abre .9s ease both}
+@keyframes abre{from{opacity:0;transform:translateY(40px)}}
+.fmt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:30px}
+.fmt{background:#fff;border:2px solid transparent;border-radius:24px;padding:22px 14px;text-align:center;box-shadow:var(--shadow);transition:transform .3s,border-color .3s;color:var(--carvao)}
+.fmt:hover{transform:translateY(-4px)}
+.fmt[aria-pressed="true"]{border-color:var(--terracota);transform:translateY(-6px)}
+.fmt .dots{display:flex;gap:4px;justify-content:center;margin-bottom:8px;min-height:14px}
+.fmt .dots i{background:var(--terracota)}
+.fmt h3{font-size:17px;color:var(--petroleo);margin-bottom:2px}
+.fmt .pc{font-family:Poppins,sans-serif;font-size:34px;font-weight:700;color:var(--terracota);line-height:1.1}
+.fmt .un{font-size:13.5px;color:var(--muted);margin-top:4px;min-height:38px}
+.plan-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:start}
+.cfg-l{font-size:13.5px;font-weight:600;color:var(--petroleo);margin:14px 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{padding:9px 18px;border-radius:99px;border:2px solid var(--petroleo);color:var(--petroleo);font-weight:600;font-size:14.5px;transition:background .2s,color .2s}
+.chips button[aria-pressed="true"]{background:var(--petroleo);color:#fff}
+.res{background:var(--petroleo);color:#fff;border-radius:22px;padding:22px;margin-top:20px}
+.res .t{font-family:Poppins,sans-serif;font-weight:600;font-size:17px;margin-bottom:4px}
+.res .d{display:inline-block;background:var(--terracota);border-radius:99px;padding:3px 12px;font-size:13.5px;font-weight:700;margin-bottom:10px}
+.res .v{font-size:15.5px;margin-bottom:4px}
+.res .v b{font-family:Poppins,sans-serif;font-size:26px;color:#F3B9A8}
+.res .v s{opacity:.7}
+.res .r{font-size:13.5px;opacity:.85;margin-top:10px}
+.res .btn{margin-top:14px;width:100%}
+.resumo{background:var(--creme-claro);border-radius:16px;padding:12px 16px;font-size:14px;color:var(--petroleo);font-weight:600}
+.aviso-valores{margin-top:18px;background:#FFF4EE;border:2px solid var(--terracota);border-radius:22px;padding:20px 22px}
+.aviso-valores strong{display:block;font-family:Poppins,sans-serif;font-size:18px;color:var(--terracota-esc);margin-bottom:6px}
+.aviso-valores p{font-size:14.5px;color:var(--carvao);margin-bottom:10px}
+.aviso-valores .padrao{font-size:13.5px;background:#fff;border-radius:14px;padding:10px 14px;color:var(--petroleo)}
+.aviso-valores q{font-style:italic}
+.aviso-valores .btn{width:100%;margin-top:4px}
+.regras{margin-top:28px;background:#fff;border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow)}
+.regras h3{font-size:19px;color:var(--petroleo);margin-bottom:12px}
+.regras li{display:flex;gap:10px;font-size:14.5px;color:var(--muted);margin-bottom:7px}
+.regras li::before{content:"•";color:var(--terracota);font-weight:700}
+.regras li b{color:var(--carvao)}
+.promo-only{display:none}
+html.promo-on .promo-only{display:inline}
+.tabelas{margin-top:26px;display:grid;gap:12px}
+.tabelas details{background:#fff;box-shadow:var(--shadow)}
+.tbl-wrap{overflow-x:auto;padding-bottom:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:540px}
+.tbl th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--creme)}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--creme)}
+.tbl td:last-child{font-weight:700;color:var(--terracota)}
+.reg-link{display:inline-flex;gap:8px;align-items:center;margin-top:14px;font-weight:600;color:var(--petroleo);text-decoration:underline}
+.pt-mini a{color:#F3B9A8;text-decoration:underline}
+.regras .aviso{margin-top:14px;font-size:13px;color:var(--muted);border-top:1px solid var(--creme);padding-top:12px}
+@media (max-width:900px){
+  .planos{padding:64px 0}
+  .plan-grid{grid-template-columns:1fr}
+  .fmt-grid,.pt-tiers{grid-template-columns:1fr 1fr}
+}
 /* ========== AVISO DE COOKIES ========== */
 #cookies{position:fixed;left:18px;right:96px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:90;max-width:640px;background:#fff;border-radius:22px;padding:18px 20px;box-shadow:0 18px 44px -12px rgba(35,31,32,.4);border:1px solid rgba(44,91,103,.15);display:none;gap:14px;align-items:center;flex-wrap:wrap}
 #cookies.mostra{display:flex;animation:sobeAviso .5s ease both}
@@ -345,7 +476,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   gtag('js', new Date());
 </script>
 </head>
-<body class="travado">
+<body>
 
 <!-- ================= PORTA DE ENTRADA ================= -->
 <div id="porta" role="dialog" aria-modal="true" aria-labelledby="porta-titulo">
@@ -378,6 +509,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
       <img src="https://github.com/user-attachments/assets/7ea13191-363a-4920-9f30-43c8d411f7f6" alt="Amanda Mendes Fisioterapia" referrerpolicy="no-referrer">
     </a>
     <nav class="nav" aria-label="Principal">
+      <a href="#planos" class="nav-bf">Promoção</a>
       <a href="#metodos">Métodos</a>
       <a href="#pilates">Pilates</a>
       <a href="#rpg">RPG Souchard</a>
@@ -392,6 +524,109 @@ dialog .btn{margin-top:10px;padding:12px 24px}
 </header>
 
 <main>
+
+<!-- ================= PROMOÇÃO TURMAS DA MANHÃ ================= -->
+<div class="promo-wrap" id="promo">
+<section class="promo-topo" id="promo-topo" aria-label="Promoção Turmas da Manhã">
+  <div class="pt-in">
+    <img class="pt-logo" src="https://github.com/user-attachments/assets/7ea13191-363a-4920-9f30-43c8d411f7f6" alt="Amanda Mendes Fisioterapia" referrerpolicy="no-referrer" onerror="this.style.display='none'">
+    <span class="pt-badge">PILATES TERAPÊUTICO · TURMAS DA MANHÃ</span>
+    <h1>Até <span class="big">30% de desconto</span> no seu plano de Pilates</h1>
+    <p class="pt-sub">Planos de 4, 5 ou 6 meses, 2x ou 3x por semana, no <strong>período da manhã (07h às 12h, de segunda a sexta)</strong>. Desconto progressivo: quanto mais gente na mesma turma, maior o desconto para todos.</p>
+    <span class="pt-validade">Válida de <b data-d="ini">26/11</b> a <b data-d="fim">30/11</b></span>
+
+    <div class="pt-video" id="pt-video-box">
+      <video id="pt-video" playsinline preload="metadata" poster="promocao-capa.jpg" disablepictureinpicture controlslist="nodownload noremoteplayback">
+        <source src="promocao.mp4" type="video/mp4">
+      </video>
+      <button type="button" class="pt-play" id="pt-play" aria-label="Assistir ao vídeo da promoção">
+        <span class="tri"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
+        <span id="pt-play-txt">Assistir ao vídeo (1min30)</span>
+      </button>
+      <div class="pt-bar" aria-hidden="true"><span id="pt-bar-fill"></span></div>
+      <div class="pt-falha" id="pt-falha">O vídeo não pôde ser carregado agora. Você já pode ver os planos e valores logo abaixo.</div>
+    </div>
+    <p class="pt-dica" id="pt-dica" aria-live="polite">Assista ao vídeo até o final para liberar os planos e valores.</p>
+
+    <div class="pt-tiers">
+      <div class="pt-tier"><div class="dots"><i></i></div><div class="pc">15<small>%</small></div><h3>Single</h3><p>Plano individual</p></div>
+      <div class="pt-tier"><div class="dots"><i></i><i></i></div><div class="pc">20<small>%</small></div><h3>Duo</h3><p>Você + 1 pessoa na mesma turma</p></div>
+      <div class="pt-tier"><div class="dots"><i></i><i></i><i></i></div><div class="pc">25<small>%</small></div><h3>Trio</h3><p>Você + 2 pessoas na mesma turma</p></div>
+      <div class="pt-tier"><div class="dots"><i></i><i></i><i></i><i></i></div><div class="pc">30<small>%</small></div><h3>Quarteto Full</h3><p>Turma completa, 4 participantes</p></div>
+    </div>
+
+    <div class="pt-cta">
+      <a class="btn btn-wa" data-zap="Olá, gostaria de saber mais sobre as turmas de Pilates matutinas e os planos de atendimento." href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Garantir minha vaga</a>
+      <a class="btn btn-claro" href="#planos" id="pt-ver" aria-disabled="true">Planos e valores (libera após o vídeo)</a>
+    </div>
+    <p class="pt-mini">Exclusiva para planos da manhã · Todos da turma no mesmo dia, horário e turma · Vagas sujeitas à disponibilidade · <a href="https://github.com/amandamendes90-cmd/amandamendesfisioterapia#readme" target="_blank" rel="noopener">Ler regulamento completo</a></p>
+  </div>
+</section>
+
+<section class="planos" id="planos">
+  <div class="wrap">
+    <div class="head center">
+      <span class="eyebrow">Planos e valores</span>
+      <h2>Monte o seu plano e veja o desconto</h2>
+      <p>Escolha o formato da turma, a frequência e a duração do plano. Informações sobre valores são passadas de forma privada, mediante solicitação, por mensagem ou presencialmente no estúdio.</p>
+    </div>
+
+    <div class="fmt-grid" id="fmt-grid">
+      <button type="button" class="fmt" data-f="single" aria-pressed="true"><div class="dots"><i></i></div><h3>Single</h3><div class="pc">15%</div><div class="un" data-un></div></button>
+      <button type="button" class="fmt" data-f="duo" aria-pressed="false"><div class="dots"><i></i><i></i></div><h3>Duo</h3><div class="pc">20%</div><div class="un" data-un></div></button>
+      <button type="button" class="fmt" data-f="trio" aria-pressed="false"><div class="dots"><i></i><i></i><i></i></div><h3>Trio</h3><div class="pc">25%</div><div class="un" data-un></div></button>
+      <button type="button" class="fmt" data-f="quarteto" aria-pressed="false"><div class="dots"><i></i><i></i><i></i><i></i></div><h3>Quarteto Full</h3><div class="pc">30%</div><div class="un" data-un></div></button>
+    </div>
+
+    <div class="plan-grid">
+      <div class="caixa">
+        <h3>Seu plano</h3>
+        <p class="cfg-l">Vezes por semana</p>
+        <div class="chips" id="chips-freq"><button type="button" data-v="2x" aria-pressed="true">2x por semana</button><button type="button" data-v="3x" aria-pressed="false">3x por semana</button></div>
+        <p class="cfg-l">Duração do plano</p>
+        <div class="chips" id="chips-meses"><button type="button" data-v="4" aria-pressed="false">4 meses</button><button type="button" data-v="5" aria-pressed="false">5 meses</button><button type="button" data-v="6" aria-pressed="true">6 meses</button></div>
+        <div class="res" id="res" aria-live="polite"></div>
+        <div class="aviso-valores" role="note">
+          <strong>Quer saber os valores?</strong>
+          <p>Agende uma avaliação ou envie uma <b>solicitação privada</b> sobre os valores. Em respeito ao Código de Ética e Deontologia da Fisioterapia (Resolução COFFITO nº 424/2013), <b>não divulgamos valores, tabelas de preços ou formas de pagamento</b> em sites e redes sociais. Essas informações são passadas diretamente a você, mediante solicitação, por mensagem privada ou presencialmente no estúdio.</p>
+          <p class="padrao">Mensagem padrão de solicitação: <q id="msg-padrao">Olá, gostaria de saber mais sobre as turmas de Pilates matutinas e os planos de atendimento.</q></p>
+          <a class="btn btn-wa" id="res-zap" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Enviar solicitação privada pelo WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="caixa">
+        <h3>Solicite informações</h3>
+        <p>Preencha e envie a solicitação pelo WhatsApp. A Amanda responde de forma privada, com horários, vagas e valores.</p>
+        <form id="form-vaga">
+          <div class="resumo" id="form-resumo"></div>
+          <label>Seu nome<input type="text" id="v-nome" required autocomplete="name" placeholder="Como podemos te chamar?"></label>
+          <label>Seu WhatsApp<input type="tel" id="v-tel" required autocomplete="tel" inputmode="tel" placeholder="(45) 99999-9999"></label>
+          <label>Dias e horário de preferência (manhã, 07h às 12h)<input type="text" id="v-horario" placeholder="Ex.: terças e quintas, às 8h"></label>
+          <label id="v-amigos-l" style="display:none">Demais participantes da turma (nome e WhatsApp)<textarea id="v-amigos" placeholder="Ex.: Maria – (45) 99999-0000"></textarea></label>
+          <button type="submit" class="btn btn-terra">Enviar solicitação pelo WhatsApp</button>
+          <p class="form-nota">Ao enviar, o WhatsApp abre com a mensagem de solicitação pronta (você revisa e envia). A vaga é confirmada pela equipe, conforme a disponibilidade das turmas. Ao participar, você concorda com o <a href="https://github.com/amandamendes90-cmd/amandamendesfisioterapia#readme" target="_blank" rel="noopener" style="text-decoration:underline">regulamento da promoção</a>.</p>
+        </form>
+      </div>
+    </div>
+
+    <div class="regras">
+      <h3>Regras da promoção (resumo)</h3>
+      <ul>
+        <li><span><b>Vigência:</b> de <b data-d="ini-longa">26 de novembro</b> a <b data-d="fim-longa">30 de novembro</b>. Vale a data de assinatura do contrato de adesão do plano.</span></li>
+        <li><span><b>Quem pode:</b> alunos novos e alunos já matriculados, em planos de <b>4, 5 ou 6 meses</b>, com <b>2x ou 3x por semana</b>, no <b>período da manhã (07h às 12h, de segunda a sexta)</b>.</span></li>
+        <li><span><b>Faixas de desconto:</b> Single (1 pessoa) 15% · Duo (2) 20% · Trio (3) 25% · Quarteto Full (4) 30%.</span></li>
+        <li><span><b>Turma:</b> todos os participantes devem fechar o plano nos <b>mesmos dias e horários</b>, durante a promoção. O desconto vale para todos da turma.</span></li>
+        <li><span><b>Exclusividade do horário:</b> somente no Quarteto Full. Nos planos Single, Duo e Trio, outras pessoas podem treinar no mesmo dia e horário.</span></li>
+        <li><span><b>Mudança de horário:</b> permitida dentro do período da manhã, sem perder o desconto, conforme disponibilidade de vagas.</span></li>
+        <li><span><b>Renovação em outros horários:</b> desconto máximo de 15%, sem as faixas progressivas.</span></li>
+        <li><span>Não acumulável com outras promoções, cupons ou convênios. Vagas sujeitas à disponibilidade das turmas.</span></li>
+      </ul>
+      <p class="aviso"><b>Valores:</b> informados somente em contato privado, mediante solicitação, ou presencialmente no estúdio. O Pilates Terapêutico não constitui tratamento médico, não substitui atendimento fisioterapêutico, médico ou de outra natureza clínica e não se confunde com procedimento de cura. Não há garantia de resultado específico: os resultados variam conforme características individuais, frequência, assiduidade e histórico de saúde. Informe ao estúdio qualquer condição de saúde, restrição médica, lesão, gestação ou uso de medicamento antes de começar.</p>
+      <a class="reg-link" href="https://github.com/amandamendes90-cmd/amandamendesfisioterapia#readme" target="_blank" rel="noopener">Ler o regulamento completo →</a>
+    </div>
+  </div>
+</section>
+</div>
 
 <!-- ================= HERO / CHAMARIZ ================= -->
 <section class="hero" id="inicio">
@@ -492,6 +727,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
           <li>Mobilidade com segurança</li>
         </ul>
         <p class="quem-atende"><b>Atendimento com:</b> Amanda ou Fernanda</p>
+        <p class="nota-pil">O Pilates Terapêutico não constitui tratamento médico, não substitui atendimento fisioterapêutico ou médico e não se confunde com procedimento de cura. Os resultados variam de pessoa para pessoa.</p>
         <a class="btn btn-wa" data-zap="Olá, Amanda! Quero agendar uma avaliação para o Pilates Terapêutico." href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Agendar avaliação de Pilates</a>
       </div>
     </div>
@@ -519,7 +755,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
 
     <div class="jornada rev">
       <h3>Como os dois métodos se completam</h3>
-      <p>Cada pessoa percorre um caminho diferente. Esta é uma ideia geral de como o tratamento pode evoluir, e a avaliação define o seu.</p>
+      <p>Cada pessoa percorre um caminho diferente. Esta é uma ideia geral de como o acompanhamento pode evoluir, e a avaliação define o seu.</p>
       <div class="etapas">
         <div class="etapa"><div class="n">1</div><h4>Avaliação</h4><p>Entendemos sua queixa e seu corpo.</p></div>
         <div class="etapa"><div class="n">2</div><h4>RPG Souchard</h4><p>Trabalho de tensões e organização da postura.</p></div>
@@ -594,7 +830,7 @@ dialog .btn{margin-top:10px;padding:12px 24px}
     <div class="head center rev">
       <span class="eyebrow">Depoimentos</span>
       <h2>Quem começou pela avaliação conta como foi.</h2>
-      <p>Resultados variam de pessoa para pessoa; cada tratamento é individual.</p>
+      <p>Resultados variam de pessoa para pessoa; cada acompanhamento é individual.</p>
     </div>
     <div class="depo-grid">
       <article class="depo-card rev">
@@ -621,17 +857,17 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   <div class="wrap">
     <div class="head center rev">
       <span class="eyebrow">O primeiro passo</span>
-      <h2>Sua avaliação individual: onde o tratamento começa.</h2>
+      <h2>Sua avaliação individual: onde o acompanhamento começa.</h2>
       <p>Antes de qualquer plano, precisamos entender você. Por isso tudo começa com uma avaliação personalizada.</p>
     </div>
     <div class="aval-grid">
-      <div class="aval-card rev"><div class="n">1</div><h3>Escuta e histórico</h3><p>Conversamos sobre a sua queixa, sua rotina, seus exames e o que você espera do tratamento.</p></div>
+      <div class="aval-card rev"><div class="n">1</div><h3>Escuta e histórico</h3><p>Conversamos sobre a sua queixa, sua rotina, seus exames e o que você espera do acompanhamento.</p></div>
       <div class="aval-card rev d1"><div class="n">2</div><h3>Avaliação do corpo</h3><p>Analisamos postura, movimento e força para entender o seu caso.</p></div>
       <div class="aval-card rev d2"><div class="n">3</div><h3>Seu plano sob medida</h3><p>Você sai sabendo qual método é mais indicado para o seu caso e como será o seu plano de acompanhamento. Com isso, fica mais fácil escolher o plano mais adequado.</p></div>
     </div>
-    <p class="aval-nota rev">A avaliação tem custo e já conta como sessão: no Pilates é uma aula individual para conhecer o método; no RPG, uma sessão de tratamento com avaliação. Valores da avaliação e dos planos são informados pelo WhatsApp, pois variam conforme horário, categoria e profissional.</p>
+    <p class="aval-nota rev">A avaliação tem custo e já conta como sessão: no Pilates é uma aula individual para conhecer o método; no RPG, uma sessão de tratamento com avaliação. As informações sobre valores são passadas de forma privada, mediante solicitação, por mensagem ou presencialmente no estúdio.</p>
     <div class="aval-cta rev">
-      <a class="btn btn-wa" style="background:#fff;color:var(--wa-esc)" data-zap="Olá, Amanda! Gostaria de agendar uma avaliação e saber os valores." href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Agendar minha avaliação agora</a>
+      <a class="btn btn-wa" style="background:#fff;color:var(--wa-esc)" data-zap="Olá, Amanda! Gostaria de agendar uma avaliação e solicitar, de forma privada, informações sobre valores." href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Agendar minha avaliação agora</a>
     </div>
   </div>
 </section>
@@ -647,9 +883,9 @@ dialog .btn{margin-top:10px;padding:12px 24px}
       <details><summary>Já tenho indicação médica. Devo levar algo?</summary><p>Se tiver pedido médico, laudos ou exames de imagem, leve para a avaliação: ajudam a entender o seu caso. Se ainda não tiver, converse com a gente pelo WhatsApp.</p></details>
       <details><summary>Não sei se preciso de RPG ou de Pilates. E agora?</summary><p>Sem problema. Essa escolha é feita na avaliação. Você pode agendar sem saber e a Amanda indica o método (ou a combinação) mais adequado ao seu caso.</p></details>
       <details><summary>A avaliação tem custo?</summary><p>Sim, e ela já conta como uma sessão realizada. No <b>Pilates</b>, a avaliação é uma <b>aula individual</b> para você conhecer o método na prática. No <b>RPG Souchard</b>, é uma <b>sessão de tratamento já com avaliação</b>. Ou seja: você não paga só para “ser avaliado”, já começa a cuidar de si.</p></details>
-      <details><summary>Quanto custam a avaliação e os planos?</summary><p>Os valores da avaliação e dos planos são informados pelo chat do WhatsApp, porque podem variar conforme o horário, a categoria e a profissional. É só chamar e responderemos com tudo o que você precisa saber.</p></details>
+      <details><summary>Posso saber os valores?</summary><p>Sim. Seguindo o Código de Ética e Deontologia da Fisioterapia (Resolução COFFITO nº 424/2013), os valores não são divulgados em sites ou redes sociais. Eles são informados diretamente a você, mediante solicitação, em mensagem privada pelo WhatsApp ou presencialmente no estúdio.</p></details>
       <details><summary>O atendimento é individual?</summary><p>Sim. O atendimento é com hora marcada e conduzido pela fisioterapeuta, com foco total no seu caso.</p></details>
-      <details><summary>Como agendo?</summary><p>Pelo botão de WhatsApp desta página ou preenchendo o formulário de contato. Respondemos em horário comercial, já informando horários disponíveis e valores.</p></details>
+      <details><summary>Como agendo?</summary><p>Pelo botão de WhatsApp desta página ou preenchendo o formulário de contato. Respondemos em horário comercial, informando os horários disponíveis e, se você solicitar, os valores de forma privada.</p></details>
     </div>
   </div>
 </section>
@@ -711,8 +947,9 @@ dialog .btn{margin-top:10px;padding:12px 24px}
     <p>Rua Curitiba, 1350, Sala 02 — Bairro Neva, Cascavel/PR · CEP 85.802-227</p>
     <p>Fisioterapeutas responsáveis: Amanda Mendes (CREFITO 188706-F) · Fernanda Pfeffer (CREFITO 468776-F)</p>
     <p>WhatsApp: +55 45 99915-5144</p>
+    <p style="max-width:640px;margin-inline:auto;font-size:12.5px;opacity:.85">Em respeito ao Código de Ética e Deontologia da Fisioterapia (Resolução COFFITO nº 424/2013), valores não são divulgados neste site. Informações sobre valores são prestadas apenas em contato privado, mediante solicitação, ou presencialmente no estúdio.</p>
     <p>© 2026 Amanda Mendes Fisioterapia</p>
-    <button type="button" id="btn-priv">Política de Privacidade</button> · <button type="button" id="btn-ck">Preferências de cookies</button>
+    <button type="button" id="btn-priv">Política de Privacidade</button> <span class="promo-only">· <a href="https://github.com/amandamendes90-cmd/amandamendesfisioterapia#readme" target="_blank" rel="noopener" style="color:#F3B9A8;text-decoration:underline">Regulamento da promoção</a></span> · <button type="button" id="btn-ck">Preferências de cookies</button>
   </div>
 </footer>
 
@@ -775,6 +1012,8 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   if ((PULAR_PORTA_NOS_ANUNCIOS && veioDosAnuncios) || (location.hash && location.hash.length > 1)) {
     porta.style.display = "none";
     document.body.classList.remove("travado");
+  } else if (document.documentElement.classList.contains("promo-off")) {
+    document.body.classList.add("travado");   // sem promoção: tela de entrada normal
   }
 
   // Animação de entrada ao rolar
@@ -839,6 +1078,125 @@ dialog .btn{margin-top:10px;padding:12px 24px}
   document.getElementById("cookies-nao").addEventListener("click", function(){ gravarEscolha("recusado"); aplicarEscolha("recusado"); ck.classList.remove("mostra"); });
   document.getElementById("btn-ck").addEventListener("click", function(){ try{localStorage.removeItem("cookies-escolha");}catch(e){} ck.classList.add("mostra"); });
   document.getElementById("cookies-priv").addEventListener("click", function(){ dlg.showModal ? dlg.showModal() : dlg.setAttribute("open",""); });
+})();
+</script>
+<script>
+/* ===== Promoção: vídeo e seleção de plano (sem valores) ===== */
+(function(){
+  var P = window.PROMO, NUM = "5545999155144", d = document, html = d.documentElement;
+  if (!P || html.classList.contains("promo-off")) return;
+  function $(i){ return d.getElementById(i); }
+  function zap(m){ return "https://wa.me/" + NUM + "?text=" + encodeURIComponent(m); }
+  function push(o){ (window.dataLayer = window.dataLayer || []).push(o); }
+  var ini = Date.parse(P.inicio), fim = Date.parse(P.fim), TZ = "America/Sao_Paulo";
+  var PADRAO = P.textoPadrao;
+
+  // Todo WhatsApp da promoção leva o texto padrão de solicitação
+  d.querySelectorAll(".topo [data-zap], .flutuante").forEach(function(a){ a.href = zap(PADRAO); });
+  var mp = $("msg-padrao"); if (mp) mp.textContent = PADRAO;
+
+  // Datas (sempre vêm da configuração)
+  var curta = new Intl.DateTimeFormat("pt-BR",{day:"2-digit",month:"2-digit",timeZone:TZ});
+  var longa = new Intl.DateTimeFormat("pt-BR",{day:"numeric",month:"long",timeZone:TZ});
+  var mapa = { "ini":curta.format(ini), "fim":curta.format(fim), "ini-longa":longa.format(ini), "fim-longa":longa.format(fim) };
+  d.querySelectorAll("[data-d]").forEach(function(el){ var k = el.getAttribute("data-d"); if (mapa[k]) el.textContent = mapa[k]; });
+
+  // Vídeo + liberação da rolagem
+  var v = $("pt-video"), play = $("pt-play"), fill = $("pt-bar-fill"), dica = $("pt-dica"), ver = $("pt-ver"), box = $("pt-video-box");
+  var temAncora = location.hash && location.hash.length > 1;
+  var exigir = P.exigirVideo && !temAncora, liberado = false, maxT = 0, iniciou = false;
+  if (exigir) html.classList.add("video-trava");
+
+  function liberar(motivo){
+    if (liberado) return; liberado = true;
+    html.classList.remove("video-trava");
+    ver.removeAttribute("aria-disabled");
+    ver.textContent = "Ver planos da promoção";
+    if (motivo === "fim"){
+      fill.style.width = "100%";
+      dica.textContent = "Pronto! Os planos da promoção foram liberados logo abaixo.";
+      dica.classList.add("ok");
+      push({ event: "promo_video_completo" });
+    } else { dica.style.display = "none"; }
+    $("planos").classList.add("aberto");
+    if (motivo === "fim" || motivo === "erro") setTimeout(function(){ $("planos").scrollIntoView({behavior:"smooth"}); }, 450);
+  }
+  if (!exigir) liberar("livre");
+
+  ver.addEventListener("click", function(e){
+    if (!liberado){ e.preventDefault(); dica.classList.remove("balanca"); void dica.offsetWidth; dica.classList.add("balanca"); }
+  });
+  function falhou(){ box.classList.add("falhou"); liberar("erro"); }
+  v.addEventListener("error", falhou);
+  var src = v.querySelector("source"); if (src) src.addEventListener("error", falhou);
+
+  function iniciar(){
+    v.muted = false;
+    var pr = v.play();
+    if (pr && pr.catch) pr.catch(function(){ play.hidden = false; });
+    if (!iniciou){ iniciou = true; push({ event: "promo_video_inicio" }); }
+  }
+  play.addEventListener("click", iniciar);
+  v.addEventListener("click", function(){ if (!v.paused) v.pause(); });
+  v.addEventListener("play", function(){ play.hidden = true; });
+  v.addEventListener("pause", function(){ if (!v.ended){ play.hidden = false; $("pt-play-txt").textContent = "Continuar vídeo"; } });
+  v.addEventListener("timeupdate", function(){
+    if (v.currentTime > maxT + 1.5){ v.currentTime = maxT; return; }
+    if (v.currentTime > maxT) maxT = v.currentTime;
+    if (v.duration) fill.style.width = (maxT / v.duration * 100) + "%";
+  });
+  v.addEventListener("seeking", function(){ if (v.currentTime > maxT + 1.5) v.currentTime = maxT; });
+  v.addEventListener("ended", function(){ liberar("fim"); });
+
+  // Seleção do plano (somente percentuais, prazo e frequência: NENHUM valor em reais)
+  var FM = {
+    single:   { nome:"Single",        n:1, desc:P.descontos.single,   regra:"Plano individual. Outras pessoas podem treinar no mesmo dia e horário." },
+    duo:      { nome:"Duo",           n:2, desc:P.descontos.duo,      regra:"Você + 1 pessoa. Os dois fecham o plano nos mesmos dias e horários, na mesma turma. Outras pessoas podem treinar no mesmo horário." },
+    trio:     { nome:"Trio",          n:3, desc:P.descontos.trio,     regra:"Você + 2 pessoas. Os três fecham o plano nos mesmos dias e horários, na mesma turma. Outras pessoas podem treinar no mesmo horário." },
+    quarteto: { nome:"Quarteto Full", n:4, desc:P.descontos.quarteto, regra:"Turma completa com 4 participantes, todos no mesmo plano, dias e horários. " + P.descontos.quarteto + "% de desconto para todos e exclusividade do horário, conforme o regulamento." }
+  };
+  var st = { f:"single", freq:"2x", meses:6 };
+  function resumoTxt(){
+    var f = FM[st.f];
+    return f.nome + " (" + f.desc + "% de desconto) · " + st.freq + " por semana · plano de " + st.meses + " meses · período da manhã";
+  }
+
+  function render(){
+    d.querySelectorAll(".fmt").forEach(function(b){
+      var k = b.getAttribute("data-f");
+      b.setAttribute("aria-pressed", k === st.f ? "true" : "false");
+      b.querySelector("[data-un]").textContent = FM[k].n + (FM[k].n > 1 ? " participantes" : " participante");
+    });
+    d.querySelectorAll("#chips-freq button").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-v") === st.freq ? "true" : "false"); });
+    d.querySelectorAll("#chips-meses button").forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-v") === String(st.meses) ? "true" : "false"); });
+    var f = FM[st.f];
+    $("res").innerHTML =
+      '<div class="t">' + f.nome + '</div><div class="d">' + f.desc + '% de desconto</div>' +
+      '<div class="v">' + st.freq + ' por semana · plano de ' + st.meses + ' meses</div>' +
+      '<div class="r">' + f.regra + ' Desconto válido para o período da manhã (07h às 12h, de segunda a sexta).</div>';
+    $("res-zap").href = zap(PADRAO + "\nTenho interesse no plano: " + resumoTxt());
+    $("form-resumo").textContent = "Plano de interesse: " + resumoTxt();
+    $("v-amigos-l").style.display = f.n > 1 ? "grid" : "none";
+  }
+  d.querySelectorAll(".fmt").forEach(function(b){ b.addEventListener("click", function(){ st.f = b.getAttribute("data-f"); render(); }); });
+  d.querySelectorAll("#chips-freq button").forEach(function(b){ b.addEventListener("click", function(){ st.freq = b.getAttribute("data-v"); render(); }); });
+  d.querySelectorAll("#chips-meses button").forEach(function(b){ b.addEventListener("click", function(){ st.meses = parseInt(b.getAttribute("data-v"), 10); render(); }); });
+  render();
+  $("res-zap").addEventListener("click", function(){ push({ event: "solicitacao_valores_whatsapp", plano: st.f }); });
+
+  $("form-vaga").addEventListener("submit", function(e){
+    e.preventDefault();
+    var nome = $("v-nome").value.trim(), tel = $("v-tel").value.trim(), hor = $("v-horario").value.trim(), ami = $("v-amigos").value.trim();
+    var txt = PADRAO + "\n" +
+      "Plano de interesse: " + resumoTxt() + "\n" +
+      "Nome: " + nome + "\n" +
+      (hor ? "Dias/horário de preferência: " + hor + "\n" : "") +
+      (FM[st.f].n > 1 && ami ? "Demais participantes: " + ami + "\n" : "") +
+      "Meu WhatsApp: " + tel;
+    push({ event: "formulario_enviado", metodo: "promo_turmas_manha", plano: st.f });
+    if (typeof gtag === "function") gtag("event", "generate_lead", { metodo: "promo_turmas_manha" });
+    window.open(zap(txt), "_blank", "noopener");
+  });
 })();
 </script>
 </body>
