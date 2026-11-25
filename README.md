@@ -10,3 +10,4 @@ site da clínica Amanda Mendes Fisioterapia
 <img width="184" height="243" alt="image-removebg-preview 2" src="https://github.com/user-attachments/assets/7ea13191-363a-4920-9f30-43c8d411f7f6" />
 <img width="1086" height="1448" alt="WhatsApp Image 2026-11-23 at 00 05 09" src="https://github.com/user-attachments/assets/ed27fb14-b938-4b3f-b452-bdfb69f8e40b" />
 <img width="1024" height="1536" alt="Imagemgerada_1795491985977" src="https://github.com/user-attachments/assets/b76f27cb-4bc8-4c41-a2fa-ac1948a2f6e7" />
+<img width="1024" height="1024" alt="promoção 1x1" src="https://github.com/user-attachments/assets/b99779e5-036c-496a-acf9-7766015a04dd" />
