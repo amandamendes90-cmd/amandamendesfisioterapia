@@ -20,6 +20,7 @@
     inicio: "2026-11-26T00:00:00-03:00",   // início da promoção
     fim:    "2026-11-30T23:59:59-03:00",   // EXTENSÃO RELÂMPAGO: troque por "2026-12-05T23:59:59-03:00" (e atualize o regulamento em PDF)
     exigirVideo: true,                      // true = rolagem só libera após o vídeo; false = libera direto
+    liberarApos: 30,                        // segundos de vídeo assistidos para liberar a página (o vídeo segue tocando)
     descontos: { single: 15, duo: 20, trio: 25, quarteto: 30 },
     // Texto padrão que acompanha TODA mensagem de solicitação enviada pelo WhatsApp (fica registrado na conversa)
     textoPadrao: "Olá, gostaria de saber mais sobre as turmas de Pilates matutinas e os planos de atendimento."
@@ -552,12 +553,12 @@ html.promo-on .promo-only{display:inline}
       </video>
       <button type="button" class="pt-play" id="pt-play" aria-label="Assistir ao vídeo da promoção">
         <span class="tri"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
-        <span id="pt-play-txt">Assistir ao vídeo (35 seg)</span>
+        <span id="pt-play-txt">Assistir ao vídeo (é curtinho)</span>
       </button>
       <div class="pt-bar" aria-hidden="true"><span id="pt-bar-fill"></span></div>
       <div class="pt-falha" id="pt-falha">O vídeo não pôde ser carregado agora. Você já pode ver o bônus e os planos logo abaixo.</div>
     </div>
-    <p class="pt-dica" id="pt-dica" aria-live="polite">Assista ao vídeo até o final para liberar a página, o bônus promocional e o conteúdo completo do site.</p>
+    <p class="pt-dica" id="pt-dica" aria-live="polite">Assista ao vídeo até o final para liberar a página, o bônus e o conteúdo completo do site.</p>
 
     <div class="pt-tiers">
       <div class="pt-tier"><div class="dots"><i></i></div><div class="pc">15<small>%</small></div><h3>Single</h3><p>Plano individual</p></div>
@@ -980,7 +981,7 @@ html.promo-on .promo-only{display:inline}
   <div class="pop-card">
     <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
     <h3 id="pop-t">Falta só um passo!</h3>
-    <p id="pop-d">Assista nosso vídeo para liberar a página. É curtinho, só 35 seg, e vai valer a pena!</p>
+    <p id="pop-d">Assista nosso vídeo para liberar a página. É um vídeo curtinho e vai valer a pena!</p>
     <button type="button" class="btn btn-terra" id="pop-ok">Assistir agora</button>
     <button type="button" class="pop-x" id="pop-x">Fechar</button>
   </div>
@@ -1120,7 +1121,7 @@ html.promo-on .promo-only{display:inline}
   d.querySelectorAll("[data-d]").forEach(function(el){ var k = el.getAttribute("data-d"); if (mapa[k]) el.textContent = mapa[k]; });
 
   // Vídeo + liberação da rolagem
-  var v = $("pt-video"), play = $("pt-play"), fill = $("pt-bar-fill"), dica = $("pt-dica"), ver = $("pt-ver"), box = $("pt-video-box");
+  var topo = $("promo-topo"), v = $("pt-video"), play = $("pt-play"), fill = $("pt-bar-fill"), dica = $("pt-dica"), ver = $("pt-ver"), box = $("pt-video-box");
   var temAncora = location.hash && location.hash.length > 1;
   var exigir = P.exigirVideo && !temAncora, liberado = false, maxT = 0, iniciou = false;
   if (exigir) html.classList.add("video-trava");
@@ -1132,7 +1133,7 @@ html.promo-on .promo-only{display:inline}
     var t = Date.now(); if (t - ultimoPop < 2500) return; ultimoPop = t;
     var tocando = !v.paused && !v.ended;
     $("pop-t").textContent = tocando ? "Quase lá!" : "Falta só um passo!";
-    $("pop-d").textContent = tocando ? "Assista até o final para liberar a página. É só mais um pouquinho!" : "Assista nosso vídeo para liberar a página. É curtinho, só 35 seg, e vai valer a pena!";
+    $("pop-d").textContent = tocando ? "Continue assistindo só mais um pouquinho para liberar a página." : "Assista nosso vídeo para liberar a página. É um vídeo curtinho e vai valer a pena!";
     $("pop-ok").textContent = tocando ? "Continuar assistindo" : "Assistir agora";
     pop.classList.add("on");
     push({ event: "promo_aviso_video" });
@@ -1141,14 +1142,15 @@ html.promo-on .promo-only{display:inline}
   function liberar(motivo){
     if (liberado) return; liberado = true;
     fecharPop();
+    var pos = topo.scrollTop;                       // mantém o vídeo na mesma posição da tela
     html.classList.remove("video-trava");
+    if (exigir) window.scrollTo({ top: pos, behavior: "instant" });
     ver.removeAttribute("aria-disabled");
     ver.textContent = "Ver bônus e planos";
-    if (motivo === "fim"){
-      fill.style.width = "100%";
-      dica.textContent = "Pronto! O bônus promocional e o site completo foram liberados abaixo.";
+    if (motivo === "tempo" || motivo === "fim"){
+      dica.textContent = motivo === "tempo" ? "Página liberada! Role para ver o bônus e o site completo, ou continue assistindo." : "Pronto! O bônus e o site completo foram liberados abaixo.";
       dica.classList.add("ok");
-      push({ event: "promo_video_completo" });
+      push({ event: "promo_video_liberou", motivo: motivo });
     } else { dica.style.display = "none"; }
     $("planos").classList.add("aberto");
     if (motivo === "fim" || motivo === "erro") setTimeout(function(){ $("planos").scrollIntoView({behavior:"smooth"}); }, 450);
@@ -1160,7 +1162,7 @@ html.promo-on .promo-only{display:inline}
   });
 
   // Tentativa de rolar além do fim da primeira tela (roda, toque ou teclado) abre o aviso
-  var topo = $("promo-topo"), y0 = 0;
+  var y0 = 0;
   function noFundo(){ return topo.scrollTop + topo.clientHeight >= topo.scrollHeight - 3; }
   d.addEventListener("wheel", function(e){ if (exigir && !liberado && e.deltaY > 0 && noFundo()) mostrarPop(); }, { passive:true });
   d.addEventListener("touchstart", function(e){ y0 = e.touches[0].clientY; }, { passive:true });
@@ -1196,9 +1198,10 @@ html.promo-on .promo-only{display:inline}
     if (v.currentTime > maxT + 1.5){ v.currentTime = maxT; return; }
     if (v.currentTime > maxT) maxT = v.currentTime;
     if (v.duration) fill.style.width = (maxT / v.duration * 100) + "%";
+    if (maxT >= P.liberarApos) liberar("tempo");
   });
   v.addEventListener("seeking", function(){ if (v.currentTime > maxT + 1.5) v.currentTime = maxT; });
-  v.addEventListener("ended", function(){ liberar("fim"); });
+  v.addEventListener("ended", function(){ fill.style.width = "100%"; push({ event: "promo_video_completo" }); liberar("fim"); });
 
   // Seleção do plano (somente percentuais, prazo e frequência: NENHUM valor em reais)
   var FM = {
