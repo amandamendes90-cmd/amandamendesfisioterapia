@@ -390,6 +390,18 @@ html.video-trava #promo-topo{height:100vh;height:100svh;overflow-y:auto;overscro
 .regras li{display:flex;gap:10px;font-size:14.5px;color:var(--muted);margin-bottom:7px}
 .regras li::before{content:"•";color:var(--terracota);font-weight:700}
 .regras li b{color:var(--carvao)}
+#pt-pop{position:fixed;inset:0;z-index:96;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,8,9,.68);backdrop-filter:blur(3px)}
+#pt-pop.on{display:flex;animation:popIn .25s ease both}
+@keyframes popIn{from{opacity:0}}
+.pop-card{background:#fff;color:var(--carvao);border-radius:28px;max-width:420px;width:100%;padding:30px 24px 22px;text-align:center;box-shadow:0 30px 60px -20px rgba(0,0,0,.6);animation:popCard .35s ease both}
+@keyframes popCard{from{transform:translateY(24px) scale(.96)}}
+.pop-card .ico{width:68px;height:68px;border-radius:50%;background:var(--terracota);display:grid;place-items:center;margin:0 auto 14px}
+.pop-card .ico svg{width:28px;height:28px;fill:#fff;margin-left:4px}
+.pop-card h3{font-size:22px;color:var(--petroleo);margin-bottom:8px}
+.pop-card p{font-size:16px;color:var(--muted);margin-bottom:18px}
+.pop-card .btn{width:100%}
+.pop-card .pop-x{display:block;margin:12px auto 0;font-size:14px;color:var(--muted);text-decoration:underline}
+html.promo-on .oculto-promo{display:none!important}
 .promo-only{display:none}
 html.promo-on .promo-only{display:inline}
 .tabelas{margin-top:26px;display:grid;gap:12px}
@@ -513,7 +525,7 @@ html.promo-on .promo-only{display:inline}
       <a href="#pilates">Pilates</a>
       <a href="#rpg">RPG Souchard</a>
       <a href="#profissional">Profissional</a>
-      <a href="#depoimentos">Depoimentos</a>
+      <a href="#depoimentos" class="oculto-promo">Depoimentos</a>
       <a href="#contato">Contato</a>
     </nav>
     <a class="btn btn-wa" href="#contato" data-zap="Olá, Amanda! Gostaria de agendar uma avaliação." target="_blank" rel="noopener">
@@ -531,7 +543,7 @@ html.promo-on .promo-only{display:inline}
     <img class="pt-logo" src="https://github.com/user-attachments/assets/7ea13191-363a-4920-9f30-43c8d411f7f6" alt="Amanda Mendes Fisioterapia" referrerpolicy="no-referrer" onerror="this.style.display='none'">
     <span class="pt-badge">PILATES TERAPÊUTICO · TURMAS DA MANHÃ</span>
     <h1>Até <span class="big">30% de desconto</span> no seu plano de Pilates</h1>
-    <p class="pt-sub">Planos de 4, 5 ou 6 meses, 2x ou 3x por semana, no <strong>período da manhã (07h às 12h, de segunda a sexta)</strong>. Desconto progressivo: quanto mais gente na mesma turma, maior o desconto para todos.</p>
+    <p class="pt-sub">Planos de 4, 5 ou 6 meses, 2x ou 3x por semana, no <strong>período da manhã (07h às 12h, de segunda a sexta)</strong>. Bônus progressivo: quanto mais gente na mesma turma, maior o desconto para todos.</p>
     <span class="pt-validade">Válida de <b data-d="ini">26/11</b> a <b data-d="fim">30/11</b></span>
 
     <div class="pt-video" id="pt-video-box">
@@ -540,12 +552,12 @@ html.promo-on .promo-only{display:inline}
       </video>
       <button type="button" class="pt-play" id="pt-play" aria-label="Assistir ao vídeo da promoção">
         <span class="tri"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></span>
-        <span id="pt-play-txt">Assistir ao vídeo (1min30)</span>
+        <span id="pt-play-txt">Assistir ao vídeo (35 seg)</span>
       </button>
       <div class="pt-bar" aria-hidden="true"><span id="pt-bar-fill"></span></div>
-      <div class="pt-falha" id="pt-falha">O vídeo não pôde ser carregado agora. Você já pode ver os planos e valores logo abaixo.</div>
+      <div class="pt-falha" id="pt-falha">O vídeo não pôde ser carregado agora. Você já pode ver o bônus e os planos logo abaixo.</div>
     </div>
-    <p class="pt-dica" id="pt-dica" aria-live="polite">Assista ao vídeo até o final para liberar os planos e valores.</p>
+    <p class="pt-dica" id="pt-dica" aria-live="polite">Assista ao vídeo até o final para liberar a página, o bônus promocional e o conteúdo completo do site.</p>
 
     <div class="pt-tiers">
       <div class="pt-tier"><div class="dots"><i></i></div><div class="pc">15<small>%</small></div><h3>Single</h3><p>Plano individual</p></div>
@@ -556,7 +568,7 @@ html.promo-on .promo-only{display:inline}
 
     <div class="pt-cta">
       <a class="btn btn-wa" data-zap="Olá, gostaria de saber mais sobre as turmas de Pilates matutinas e os planos de atendimento." href="#contato" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg>Garantir minha vaga</a>
-      <a class="btn btn-claro" href="#planos" id="pt-ver" aria-disabled="true">Planos e valores (libera após o vídeo)</a>
+      <a class="btn btn-claro" href="#planos" id="pt-ver" aria-disabled="true">Bônus e planos (libera após o vídeo)</a>
     </div>
     <p class="pt-mini">Exclusiva para planos da manhã · Todos da turma no mesmo dia, horário e turma · Vagas sujeitas à disponibilidade · <a href="https://github.com/amandamendes90-cmd/amandamendesfisioterapia#readme" target="_blank" rel="noopener">Ler regulamento completo</a></p>
   </div>
@@ -817,14 +829,14 @@ html.promo-on .promo-only{display:inline}
       <figure class="g2 rev d1"><img loading="lazy" src="https://github.com/user-attachments/assets/4024957b-b144-471d-b18c-bc92de85108d" alt="Detalhe do atendimento" referrerpolicy="no-referrer"></figure>
       <figure class="g3 rev d1"><img loading="lazy" src="https://github.com/user-attachments/assets/c644eda2-08b5-476c-9f8e-3ba76a5c549b" alt="Pilates Terapêutico no estúdio" referrerpolicy="no-referrer"></figure>
       <figure class="g4 rev d2"><img loading="lazy" src="https://github.com/user-attachments/assets/dde513d9-5fd4-4276-8b16-a8f9ffef19c1" alt="Atendimento no estúdio" referrerpolicy="no-referrer"></figure>
-      <figure class="g5 rev d2"><img loading="lazy" src="galeria-5.jpg" alt="Espaço do estúdio" onerror="this.style.display='none'"><span class="todo">galeria-5.jpg</span></figure>
-      <figure class="g6 rev d3"><img loading="lazy" src="galeria-6.jpg" alt="Fachada e recepção" onerror="this.style.display='none'"><span class="todo">galeria-6.jpg (fachada / recepção)</span></figure>
+      <figure class="g5 rev d2 oculto-promo"><img loading="lazy" src="galeria-5.jpg" alt="Espaço do estúdio" onerror="this.style.display='none'"><span class="todo">galeria-5.jpg</span></figure>
+      <figure class="g6 rev d3 oculto-promo"><img loading="lazy" src="galeria-6.jpg" alt="Fachada e recepção" onerror="this.style.display='none'"><span class="todo">galeria-6.jpg (fachada / recepção)</span></figure>
     </div>
   </div>
 </section>
 
 <!-- ================= DEPOIMENTOS ================= -->
-<section class="depo" id="depoimentos">
+<section class="depo oculto-promo" id="depoimentos">
   <div class="wrap">
     <div class="head center rev">
       <span class="eyebrow">Depoimentos</span>
@@ -961,6 +973,16 @@ html.promo-on .promo-only{display:inline}
   <div class="acoes">
     <button type="button" class="btn btn-line" id="cookies-nao">Recusar</button>
     <button type="button" class="btn btn-terra" id="cookies-sim">Aceitar</button>
+  </div>
+</div>
+
+<div id="pt-pop" role="alertdialog" aria-modal="true" aria-labelledby="pop-t" aria-describedby="pop-d">
+  <div class="pop-card">
+    <div class="ico"><svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></div>
+    <h3 id="pop-t">Falta só um passo!</h3>
+    <p id="pop-d">Assista nosso vídeo para liberar a página. É curtinho, só 35 seg, e vai valer a pena!</p>
+    <button type="button" class="btn btn-terra" id="pop-ok">Assistir agora</button>
+    <button type="button" class="pop-x" id="pop-x">Fechar</button>
   </div>
 </div>
 
@@ -1103,14 +1125,28 @@ html.promo-on .promo-only{display:inline}
   var exigir = P.exigirVideo && !temAncora, liberado = false, maxT = 0, iniciou = false;
   if (exigir) html.classList.add("video-trava");
 
+  var pop = $("pt-pop"), ultimoPop = 0;
+  function fecharPop(){ pop.classList.remove("on"); }
+  function mostrarPop(){
+    if (liberado || !exigir) return;
+    var t = Date.now(); if (t - ultimoPop < 2500) return; ultimoPop = t;
+    var tocando = !v.paused && !v.ended;
+    $("pop-t").textContent = tocando ? "Quase lá!" : "Falta só um passo!";
+    $("pop-d").textContent = tocando ? "Assista até o final para liberar a página. É só mais um pouquinho!" : "Assista nosso vídeo para liberar a página. É curtinho, só 35 seg, e vai valer a pena!";
+    $("pop-ok").textContent = tocando ? "Continuar assistindo" : "Assistir agora";
+    pop.classList.add("on");
+    push({ event: "promo_aviso_video" });
+  }
+
   function liberar(motivo){
     if (liberado) return; liberado = true;
+    fecharPop();
     html.classList.remove("video-trava");
     ver.removeAttribute("aria-disabled");
-    ver.textContent = "Ver planos da promoção";
+    ver.textContent = "Ver bônus e planos";
     if (motivo === "fim"){
       fill.style.width = "100%";
-      dica.textContent = "Pronto! Os planos da promoção foram liberados logo abaixo.";
+      dica.textContent = "Pronto! O bônus promocional e o site completo foram liberados abaixo.";
       dica.classList.add("ok");
       push({ event: "promo_video_completo" });
     } else { dica.style.display = "none"; }
@@ -1120,7 +1156,27 @@ html.promo-on .promo-only{display:inline}
   if (!exigir) liberar("livre");
 
   ver.addEventListener("click", function(e){
-    if (!liberado){ e.preventDefault(); dica.classList.remove("balanca"); void dica.offsetWidth; dica.classList.add("balanca"); }
+    if (!liberado){ e.preventDefault(); dica.classList.remove("balanca"); void dica.offsetWidth; dica.classList.add("balanca"); mostrarPop(); }
+  });
+
+  // Tentativa de rolar além do fim da primeira tela (roda, toque ou teclado) abre o aviso
+  var topo = $("promo-topo"), y0 = 0;
+  function noFundo(){ return topo.scrollTop + topo.clientHeight >= topo.scrollHeight - 3; }
+  d.addEventListener("wheel", function(e){ if (exigir && !liberado && e.deltaY > 0 && noFundo()) mostrarPop(); }, { passive:true });
+  d.addEventListener("touchstart", function(e){ y0 = e.touches[0].clientY; }, { passive:true });
+  d.addEventListener("touchmove", function(e){ if (exigir && !liberado && (y0 - e.touches[0].clientY) > 12 && noFundo()) mostrarPop(); }, { passive:true });
+  d.addEventListener("keydown", function(e){
+    if (e.key === "Escape") { fecharPop(); return; }
+    if (!exigir || liberado || pop.classList.contains("on")) return;
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "button" || tag === "input" || tag === "textarea" || tag === "a") return;
+    if ([" ", "ArrowDown", "PageDown", "End"].indexOf(e.key) > -1 && noFundo()) mostrarPop();
+  });
+  $("pop-x").addEventListener("click", fecharPop);
+  $("pop-ok").addEventListener("click", function(){
+    fecharPop();
+    box.scrollIntoView({ behavior:"smooth", block:"center" });
+    if (v.paused && !box.classList.contains("falhou")) iniciar();
   });
   function falhou(){ box.classList.add("falhou"); liberar("erro"); }
   v.addEventListener("error", falhou);
