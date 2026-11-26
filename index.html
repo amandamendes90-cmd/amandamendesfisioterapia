@@ -468,12 +468,11 @@ html.promo-on .promo-only{display:inline}
     wait_for_update: 500
   });
 </script>
-<!-- Google tag (contêiner GTM-5S4XFFS6) -->
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-5S4XFFS6"></script>
+<!-- Google tag (gtag.js) — Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GX48H8T2QH"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+  gtag('config', 'G-GX48H8T2QH');
 </script>
 </head>
 <body>
@@ -1032,8 +1031,6 @@ html.promo-on .promo-only{display:inline}
     var a = e.target.closest && e.target.closest("a[href^='https://wa.me/']");
     if (a) {
       if (typeof gtag === "function") gtag("event", "clique_whatsapp", { local: a.className || "link" });
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: "whatsapp_click" });
     }
   });
 
@@ -1049,8 +1046,7 @@ html.promo-on .promo-only{display:inline}
       (msg ? "O que sinto: " + msg + "\n" : "") +
       "Meu WhatsApp: " + tel;
     if (typeof gtag === "function") gtag("event", "generate_lead", { metodo: met });
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: "formulario_enviado", metodo: met });
+
     window.open(zap(texto), "_blank", "noopener");
   });
 
@@ -1087,7 +1083,7 @@ html.promo-on .promo-only{display:inline}
   if (!P || html.classList.contains("promo-off")) return;
   function $(i){ return d.getElementById(i); }
   function zap(m){ return "https://wa.me/" + NUM + "?text=" + encodeURIComponent(m); }
-  function push(o){ (window.dataLayer = window.dataLayer || []).push(o); }
+  function push(o){ if (typeof gtag !== "function") return; var n = o.event, p = {}; for (var k in o) if (k !== "event") p[k] = o[k]; gtag("event", n, p); }
   var ini = Date.parse(P.inicio), fim = Date.parse(P.fim), TZ = "America/Sao_Paulo";
   var PADRAO = P.textoPadrao;
 
@@ -1193,7 +1189,6 @@ html.promo-on .promo-only{display:inline}
       (hor ? "Dias/horário de preferência: " + hor + "\n" : "") +
       (FM[st.f].n > 1 && ami ? "Demais participantes: " + ami + "\n" : "") +
       "Meu WhatsApp: " + tel;
-    push({ event: "formulario_enviado", metodo: "promo_turmas_manha", plano: st.f });
     if (typeof gtag === "function") gtag("event", "generate_lead", { metodo: "promo_turmas_manha" });
     window.open(zap(txt), "_blank", "noopener");
   });
