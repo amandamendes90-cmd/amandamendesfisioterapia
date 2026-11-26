@@ -12,3 +12,6 @@ site da clínica Amanda Mendes Fisioterapia
 <img width="1024" height="1536" alt="Imagemgerada_1795491985977" src="https://github.com/user-attachments/assets/b76f27cb-4bc8-4c41-a2fa-ac1948a2f6e7" />
 <img width="1024" height="1024" alt="promoção 1x1" src="https://github.com/user-attachments/assets/b99779e5-036c-496a-acf9-7766015a04dd" />
 <img width="1024" height="1536" alt="Imagemgerada_1795561063448" src="https://github.com/user-attachments/assets/c8a894b7-9163-42d1-9bce-1aa2fd3bb878" />
+## Regulamento da promoção
+
+- [Regulamento da promoção Turmas da Manhã (PDF)](regulamento-turmas-da-manha.pdf)
